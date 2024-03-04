@@ -36,7 +36,7 @@ dependencies {
 
     //Primary Ad Networks
     implementation 'com.google.android.gms:play-services-ads:22.6.0'
-    implementation 'com.wortise:android-sdk:1.5.0'
+    implementation 'com.wortise:android-sdk:1.5.1'
 
     //GDPR
     implementation 'com.google.android.ump:user-messaging-platform:2.2.0'
