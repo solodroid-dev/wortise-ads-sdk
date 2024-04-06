@@ -7,14 +7,19 @@ import static com.solodroid.ads.sdk.util.Constant.FAN;
 import static com.solodroid.ads.sdk.util.Constant.FAN_BIDDING_ADMOB;
 import static com.solodroid.ads.sdk.util.Constant.FAN_BIDDING_AD_MANAGER;
 import static com.solodroid.ads.sdk.util.Constant.GOOGLE_AD_MANAGER;
+import static com.solodroid.ads.sdk.util.Constant.WORTISE;
 
 import android.app.Activity;
 import android.util.Log;
 
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.initialization.AdapterStatus;
+import com.wortise.ads.AdSettings;
+import com.wortise.ads.WortiseSdk;
 
 import java.util.Map;
+
+import kotlin.Unit;
 
 public class AdNetwork {
 
@@ -114,6 +119,14 @@ public class AdNetwork {
                         });
                         break;
 
+                    case WORTISE:
+                        WortiseSdk.initialize(activity, wortiseAppId, () -> {
+                            // This listener will be invoked when the initialization finishes
+                            return Unit.INSTANCE;
+                        });
+                        AdSettings.setTestEnabled(debug);
+                        break;
+
                     default:
                     break;
                 }
@@ -134,6 +147,14 @@ public class AdNetwork {
                                 Log.d(TAG, String.format("Adapter name: %s, Description: %s, Latency: %d", adapterClass, adapterStatus.getDescription(), adapterStatus.getLatency()));
                             }
                         });
+                        break;
+
+                    case WORTISE:
+                        WortiseSdk.initialize(activity, wortiseAppId, () -> {
+                            // This listener will be invoked when the initialization finishes
+                            return Unit.INSTANCE;
+                        });
+                        AdSettings.setTestEnabled(debug);
                         break;
 
                     default:
