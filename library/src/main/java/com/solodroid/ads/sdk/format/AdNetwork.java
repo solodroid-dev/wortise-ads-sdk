@@ -16,6 +16,7 @@ import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.initialization.AdapterStatus;
 import com.wortise.ads.AdSettings;
 import com.wortise.ads.WortiseSdk;
+import com.wortise.ads.consent.ConsentManager;
 
 import java.util.Map;
 

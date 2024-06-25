@@ -5,6 +5,7 @@ import static com.solodroid.ads.sdk.util.Constant.APPLOVIN_DISCOVERY;
 import static com.solodroid.ads.sdk.util.Constant.APPLOVIN_MAX;
 import static com.solodroid.ads.sdk.util.Constant.GOOGLE_AD_MANAGER;
 import static com.solodroid.ads.sdk.util.Constant.STARTAPP;
+import static com.solodroid.ads.sdk.util.Constant.WORTISE;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -17,10 +18,14 @@ import com.google.android.ump.ConsentForm;
 import com.google.android.ump.ConsentInformation;
 import com.google.android.ump.ConsentRequestParameters;
 import com.google.android.ump.UserMessagingPlatform;
+import com.wortise.ads.WortiseSdk;
+import com.wortise.ads.consent.ConsentManager;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.concurrent.atomic.AtomicBoolean;
+
+import kotlin.Unit;
 
 public class GDPR {
 
@@ -77,6 +82,13 @@ public class GDPR {
                     initializeMobileAdsSdk();
                 }
                 break;
+            case WORTISE:
+                WortiseSdk.wait(() -> {
+                    ConsentManager.requestIfRequired(activity);
+                    return Unit.INSTANCE;
+                });
+                break;
+
             case STARTAPP:
             case APPLOVIN_MAX:
             case APPLOVIN_DISCOVERY:
