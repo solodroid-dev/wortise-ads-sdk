@@ -2,10 +2,6 @@ package com.solodroid.ads.sdk.format;
 
 import static com.solodroid.ads.sdk.util.Constant.ADMOB;
 import static com.solodroid.ads.sdk.util.Constant.AD_STATUS_ON;
-import static com.solodroid.ads.sdk.util.Constant.FACEBOOK;
-import static com.solodroid.ads.sdk.util.Constant.FAN;
-import static com.solodroid.ads.sdk.util.Constant.FAN_BIDDING_ADMOB;
-import static com.solodroid.ads.sdk.util.Constant.FAN_BIDDING_AD_MANAGER;
 import static com.solodroid.ads.sdk.util.Constant.GOOGLE_AD_MANAGER;
 import static com.solodroid.ads.sdk.util.Constant.WORTISE;
 
@@ -16,7 +12,6 @@ import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.initialization.AdapterStatus;
 import com.wortise.ads.AdSettings;
 import com.wortise.ads.WortiseSdk;
-import com.wortise.ads.consent.ConsentManager;
 
 import java.util.Map;
 
