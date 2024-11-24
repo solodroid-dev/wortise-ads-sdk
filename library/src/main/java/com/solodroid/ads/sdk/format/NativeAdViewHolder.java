@@ -32,6 +32,7 @@ import com.google.android.gms.ads.nativead.MediaView;
 import com.google.android.gms.ads.nativead.NativeAdView;
 import com.solodroid.ads.sdk.R;
 import com.solodroid.ads.sdk.util.AdManagerTemplateView;
+import com.solodroid.ads.sdk.util.CheckStatus;
 import com.solodroid.ads.sdk.util.Constant;
 import com.solodroid.ads.sdk.util.NativeTemplateStyle;
 import com.solodroid.ads.sdk.util.TemplateView;
@@ -177,59 +178,61 @@ public class NativeAdViewHolder extends RecyclerView.ViewHolder {
                         break;
 
                     case WORTISE:
-                        if (wortiseNativeAd.getVisibility() != View.VISIBLE) {
-                            mGoogleNativeAd = new GoogleNativeAd(context, wortiseNativeId, new GoogleNativeAd.Listener() {
-                                @Override
-                                public void onNativeFailedToLoad(@NonNull GoogleNativeAd googleNativeAd, @NonNull AdError adError) {
-                                    loadBackupNativeAd(context, adStatus, placementStatus, backupAdNetwork, adMobNativeId, adManagerNativeId, fanNativeId, appLovinNativeId, appLovinDiscMrecZoneId, wortiseNativeId, darkTheme, legacyGDPR, nativeAdStyle, nativeBackgroundLight, nativeBackgroundDark);
-                                    Log.d(TAG, "Wortise Native Ad failed loaded");
-                                }
-
-                                @Override
-                                public void onNativeClicked(@NonNull GoogleNativeAd googleNativeAd) {
-
-                                }
-
-                                @Override
-                                public void onNativeImpression(@NonNull GoogleNativeAd googleNativeAd) {
-
-                                }
-
-                                @SuppressLint("InflateParams")
-                                @Override
-                                public void onNativeLoaded(@NonNull GoogleNativeAd googleNativeAd, @NonNull com.google.android.gms.ads.nativead.NativeAd nativeAd) {
-                                    LayoutInflater inflater = LayoutInflater.from(context);
-                                    NativeAdView adView;
-                                    switch (nativeAdStyle) {
-                                        case Constant.STYLE_NEWS:
-                                        case Constant.STYLE_MEDIUM:
-                                            adView = (NativeAdView) inflater.inflate(R.layout.gnt_wortise_news_template_view, null);
-                                            break;
-                                        case Constant.STYLE_VIDEO_SMALL:
-                                            adView = (NativeAdView) inflater.inflate(R.layout.gnt_wortise_video_small_template_view, null);
-                                            break;
-                                        case Constant.STYLE_VIDEO_LARGE:
-                                            adView = (NativeAdView) inflater.inflate(R.layout.gnt_wortise_video_large_template_view, null);
-                                            break;
-                                        case Constant.STYLE_RADIO:
-                                        case Constant.STYLE_SMALL:
-                                            adView = (NativeAdView) inflater.inflate(R.layout.gnt_wortise_radio_template_view, null);
-                                            break;
-                                        default:
-                                            adView = (NativeAdView) inflater.inflate(R.layout.gnt_wortise_medium_template_view, null);
-                                            break;
+                        if (CheckStatus.isWortise) {
+                            if (wortiseNativeAd.getVisibility() != View.VISIBLE) {
+                                mGoogleNativeAd = new GoogleNativeAd(context, wortiseNativeId, new GoogleNativeAd.Listener() {
+                                    @Override
+                                    public void onNativeFailedToLoad(@NonNull GoogleNativeAd googleNativeAd, @NonNull AdError adError) {
+                                        loadBackupNativeAd(context, adStatus, placementStatus, backupAdNetwork, adMobNativeId, adManagerNativeId, fanNativeId, appLovinNativeId, appLovinDiscMrecZoneId, wortiseNativeId, darkTheme, legacyGDPR, nativeAdStyle, nativeBackgroundLight, nativeBackgroundDark);
+                                        Log.d(TAG, "Wortise Native Ad failed loaded");
                                     }
-                                    populateNativeAdView(context, nativeAd, adView, darkTheme, nativeBackgroundDark, nativeBackgroundLight);
-                                    wortiseNativeAd.removeAllViews();
-                                    wortiseNativeAd.addView(adView);
-                                    wortiseNativeAd.setVisibility(View.VISIBLE);
-                                    nativeAdViewContainer.setVisibility(View.VISIBLE);
-                                    Log.d(TAG, "Wortise Native Ad loaded");
-                                }
-                            });
-                            mGoogleNativeAd.load();
-                        } else {
-                            Log.d(TAG, "Wortise Native Ad has been loaded");
+
+                                    @Override
+                                    public void onNativeClicked(@NonNull GoogleNativeAd googleNativeAd) {
+
+                                    }
+
+                                    @Override
+                                    public void onNativeImpression(@NonNull GoogleNativeAd googleNativeAd) {
+
+                                    }
+
+                                    @SuppressLint("InflateParams")
+                                    @Override
+                                    public void onNativeLoaded(@NonNull GoogleNativeAd googleNativeAd, @NonNull com.google.android.gms.ads.nativead.NativeAd nativeAd) {
+                                        LayoutInflater inflater = LayoutInflater.from(context);
+                                        NativeAdView adView;
+                                        switch (nativeAdStyle) {
+                                            case Constant.STYLE_NEWS:
+                                            case Constant.STYLE_MEDIUM:
+                                                adView = (NativeAdView) inflater.inflate(R.layout.gnt_wortise_news_template_view, null);
+                                                break;
+                                            case Constant.STYLE_VIDEO_SMALL:
+                                                adView = (NativeAdView) inflater.inflate(R.layout.gnt_wortise_video_small_template_view, null);
+                                                break;
+                                            case Constant.STYLE_VIDEO_LARGE:
+                                                adView = (NativeAdView) inflater.inflate(R.layout.gnt_wortise_video_large_template_view, null);
+                                                break;
+                                            case Constant.STYLE_RADIO:
+                                            case Constant.STYLE_SMALL:
+                                                adView = (NativeAdView) inflater.inflate(R.layout.gnt_wortise_radio_template_view, null);
+                                                break;
+                                            default:
+                                                adView = (NativeAdView) inflater.inflate(R.layout.gnt_wortise_medium_template_view, null);
+                                                break;
+                                        }
+                                        populateNativeAdView(context, nativeAd, adView, darkTheme, nativeBackgroundDark, nativeBackgroundLight);
+                                        wortiseNativeAd.removeAllViews();
+                                        wortiseNativeAd.addView(adView);
+                                        wortiseNativeAd.setVisibility(View.VISIBLE);
+                                        nativeAdViewContainer.setVisibility(View.VISIBLE);
+                                        Log.d(TAG, "Wortise Native Ad loaded");
+                                    }
+                                });
+                                mGoogleNativeAd.load();
+                            } else {
+                                Log.d(TAG, "Wortise Native Ad has been loaded");
+                            }
                         }
                         break;
 
@@ -316,58 +319,60 @@ public class NativeAdViewHolder extends RecyclerView.ViewHolder {
                         break;
 
                     case WORTISE:
-                        if (wortiseNativeAd.getVisibility() != View.VISIBLE) {
-                            mGoogleNativeAd = new GoogleNativeAd(context, wortiseNativeId, new GoogleNativeAd.Listener() {
-                                @Override
-                                public void onNativeFailedToLoad(@NonNull GoogleNativeAd googleNativeAd, @NonNull AdError adError) {
-                                    Log.d(TAG, "[Backup] Wortise Native Ad failed loaded");
-                                }
-
-                                @Override
-                                public void onNativeClicked(@NonNull GoogleNativeAd googleNativeAd) {
-
-                                }
-
-                                @Override
-                                public void onNativeImpression(@NonNull GoogleNativeAd googleNativeAd) {
-
-                                }
-
-                                @SuppressLint("InflateParams")
-                                @Override
-                                public void onNativeLoaded(@NonNull GoogleNativeAd googleNativeAd, @NonNull com.google.android.gms.ads.nativead.NativeAd nativeAd) {
-                                    LayoutInflater inflater = LayoutInflater.from(context);
-                                    NativeAdView adView;
-                                    switch (nativeAdStyle) {
-                                        case Constant.STYLE_NEWS:
-                                        case Constant.STYLE_MEDIUM:
-                                            adView = (NativeAdView) inflater.inflate(R.layout.gnt_wortise_news_template_view, null);
-                                            break;
-                                        case Constant.STYLE_VIDEO_SMALL:
-                                            adView = (NativeAdView) inflater.inflate(R.layout.gnt_wortise_video_small_template_view, null);
-                                            break;
-                                        case Constant.STYLE_VIDEO_LARGE:
-                                            adView = (NativeAdView) inflater.inflate(R.layout.gnt_wortise_video_large_template_view, null);
-                                            break;
-                                        case Constant.STYLE_RADIO:
-                                        case Constant.STYLE_SMALL:
-                                            adView = (NativeAdView) inflater.inflate(R.layout.gnt_wortise_radio_template_view, null);
-                                            break;
-                                        default:
-                                            adView = (NativeAdView) inflater.inflate(R.layout.gnt_wortise_medium_template_view, null);
-                                            break;
+                        if (CheckStatus.isWortise) {
+                            if (wortiseNativeAd.getVisibility() != View.VISIBLE) {
+                                mGoogleNativeAd = new GoogleNativeAd(context, wortiseNativeId, new GoogleNativeAd.Listener() {
+                                    @Override
+                                    public void onNativeFailedToLoad(@NonNull GoogleNativeAd googleNativeAd, @NonNull AdError adError) {
+                                        Log.d(TAG, "[Backup] Wortise Native Ad failed loaded");
                                     }
-                                    populateNativeAdView(context, nativeAd, adView, darkTheme, nativeBackgroundDark, nativeBackgroundLight);
-                                    wortiseNativeAd.removeAllViews();
-                                    wortiseNativeAd.addView(adView);
-                                    wortiseNativeAd.setVisibility(View.VISIBLE);
-                                    nativeAdViewContainer.setVisibility(View.VISIBLE);
-                                    Log.d(TAG, "[Backup] Wortise Native Ad loaded");
-                                }
-                            });
-                            mGoogleNativeAd.load();
-                        } else {
-                            Log.d(TAG, "[Backup] Wortise Native Ad has been loaded");
+
+                                    @Override
+                                    public void onNativeClicked(@NonNull GoogleNativeAd googleNativeAd) {
+
+                                    }
+
+                                    @Override
+                                    public void onNativeImpression(@NonNull GoogleNativeAd googleNativeAd) {
+
+                                    }
+
+                                    @SuppressLint("InflateParams")
+                                    @Override
+                                    public void onNativeLoaded(@NonNull GoogleNativeAd googleNativeAd, @NonNull com.google.android.gms.ads.nativead.NativeAd nativeAd) {
+                                        LayoutInflater inflater = LayoutInflater.from(context);
+                                        NativeAdView adView;
+                                        switch (nativeAdStyle) {
+                                            case Constant.STYLE_NEWS:
+                                            case Constant.STYLE_MEDIUM:
+                                                adView = (NativeAdView) inflater.inflate(R.layout.gnt_wortise_news_template_view, null);
+                                                break;
+                                            case Constant.STYLE_VIDEO_SMALL:
+                                                adView = (NativeAdView) inflater.inflate(R.layout.gnt_wortise_video_small_template_view, null);
+                                                break;
+                                            case Constant.STYLE_VIDEO_LARGE:
+                                                adView = (NativeAdView) inflater.inflate(R.layout.gnt_wortise_video_large_template_view, null);
+                                                break;
+                                            case Constant.STYLE_RADIO:
+                                            case Constant.STYLE_SMALL:
+                                                adView = (NativeAdView) inflater.inflate(R.layout.gnt_wortise_radio_template_view, null);
+                                                break;
+                                            default:
+                                                adView = (NativeAdView) inflater.inflate(R.layout.gnt_wortise_medium_template_view, null);
+                                                break;
+                                        }
+                                        populateNativeAdView(context, nativeAd, adView, darkTheme, nativeBackgroundDark, nativeBackgroundLight);
+                                        wortiseNativeAd.removeAllViews();
+                                        wortiseNativeAd.addView(adView);
+                                        wortiseNativeAd.setVisibility(View.VISIBLE);
+                                        nativeAdViewContainer.setVisibility(View.VISIBLE);
+                                        Log.d(TAG, "[Backup] Wortise Native Ad loaded");
+                                    }
+                                });
+                                mGoogleNativeAd.load();
+                            } else {
+                                Log.d(TAG, "[Backup] Wortise Native Ad has been loaded");
+                            }
                         }
                         break;
 

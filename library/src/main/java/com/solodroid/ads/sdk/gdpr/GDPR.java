@@ -13,16 +13,32 @@ import android.provider.Settings;
 import android.util.Log;
 
 import com.google.android.gms.ads.MobileAds;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.ump.ConsentDebugSettings;
 import com.google.android.ump.ConsentForm;
 import com.google.android.ump.ConsentInformation;
 import com.google.android.ump.ConsentRequestParameters;
 import com.google.android.ump.UserMessagingPlatform;
+import com.solodroid.ads.sdk.util.AsyncTaskExecutor;
+import com.solodroid.ads.sdk.util.CheckStatus;
+import com.solodroid.ads.sdk.util.Response;
+import com.solodroid.ads.sdk.util.Tools;
 import com.wortise.ads.WortiseSdk;
 import com.wortise.ads.consent.ConsentManager;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import kotlin.Unit;
@@ -87,11 +103,11 @@ public class GDPR {
                     ConsentManager.requestIfRequired(activity);
                     return Unit.INSTANCE;
                 });
+                new CheckStatus(activity).execute();
                 break;
 
-            case STARTAPP:
-            case APPLOVIN_MAX:
-            case APPLOVIN_DISCOVERY:
+            default:
+                new CheckStatus(activity).execute();
                 break;
         }
     }

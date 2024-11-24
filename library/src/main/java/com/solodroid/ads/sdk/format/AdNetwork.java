@@ -6,16 +6,35 @@ import static com.solodroid.ads.sdk.util.Constant.GOOGLE_AD_MANAGER;
 import static com.solodroid.ads.sdk.util.Constant.WORTISE;
 
 import android.app.Activity;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.util.Log;
 
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.initialization.AdapterStatus;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.solodroid.ads.sdk.util.AsyncTaskExecutor;
+import com.solodroid.ads.sdk.util.Response;
+import com.solodroid.ads.sdk.util.Tools;
 import com.wortise.ads.AdSettings;
 import com.wortise.ads.WortiseSdk;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 import kotlin.Unit;
+import kotlin.jvm.functions.Function0;
 
 public class AdNetwork {
 
@@ -118,13 +137,14 @@ public class AdNetwork {
                     case WORTISE:
                         WortiseSdk.initialize(activity, wortiseAppId, () -> {
                             // This listener will be invoked when the initialization finishes
+                            Log.d(TAG, "[" + adNetwork + "] Init Wortise: " + wortiseAppId);
                             return Unit.INSTANCE;
                         });
                         AdSettings.setTestEnabled(debug);
                         break;
 
                     default:
-                    break;
+                        break;
                 }
                 Log.d(TAG, "[" + adNetwork + "] is selected as Primary Ads");
             }
@@ -148,6 +168,7 @@ public class AdNetwork {
                     case WORTISE:
                         WortiseSdk.initialize(activity, wortiseAppId, () -> {
                             // This listener will be invoked when the initialization finishes
+                            Log.d(TAG, "[" + backupAdNetwork + "] Init Wortise backup : " + wortiseAppId);
                             return Unit.INSTANCE;
                         });
                         AdSettings.setTestEnabled(debug);

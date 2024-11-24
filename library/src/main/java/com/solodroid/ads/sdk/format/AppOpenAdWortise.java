@@ -6,6 +6,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.solodroid.ads.sdk.util.CheckStatus;
 import com.solodroid.ads.sdk.util.OnShowAdCompleteListener;
 import com.wortise.ads.AdError;
 import com.wortise.ads.appopen.AppOpenAd;
@@ -28,9 +29,11 @@ public class AppOpenAdWortise {
             return;
         }
         isLoadingAd = true;
-        wortiseAppOpenAd = new com.wortise.ads.appopen.AppOpenAd(context, wortiseAppOpenId);
-        wortiseAppOpenAd.setListener(wortiseAppOpenAdListener);
-        wortiseAppOpenAd.loadAd();
+        if (CheckStatus.isWortise) {
+            wortiseAppOpenAd = new com.wortise.ads.appopen.AppOpenAd(context, wortiseAppOpenId);
+            wortiseAppOpenAd.setListener(wortiseAppOpenAdListener);
+            wortiseAppOpenAd.loadAd();
+        }
     }
 
     public boolean wasLoadTimeLessThanNHoursAgo(long numHours) {
@@ -40,7 +43,11 @@ public class AppOpenAdWortise {
     }
 
     public boolean isAdAvailable() {
-        return wortiseAppOpenAd != null && wortiseAppOpenAd.isAvailable() && wasLoadTimeLessThanNHoursAgo(4);
+        if (CheckStatus.isWortise) {
+            return wortiseAppOpenAd != null && wortiseAppOpenAd.isAvailable() && wasLoadTimeLessThanNHoursAgo(4);
+        } else {
+            return false;
+        }
     }
 
     public void showAdIfAvailable(@NonNull final Activity activity, String appOpenAdUnitId) {
@@ -61,56 +68,58 @@ public class AppOpenAdWortise {
             return;
         }
 
-        Log.d(LOG_TAG, "Will show ad.");
-        wortiseAppOpenAd.setListener(new com.wortise.ads.appopen.AppOpenAd.Listener() {
-            @Override
-            public void onAppOpenImpression(@NonNull AppOpenAd appOpenAd) {
+        if (CheckStatus.isWortise) {
+            Log.d(LOG_TAG, "Will show ad.");
+            wortiseAppOpenAd.setListener(new com.wortise.ads.appopen.AppOpenAd.Listener() {
+                @Override
+                public void onAppOpenImpression(@NonNull AppOpenAd appOpenAd) {
 
-            }
+                }
 
-            @Override
-            public void onAppOpenFailedToShow(@NonNull AppOpenAd appOpenAd, @NonNull AdError adError) {
+                @Override
+                public void onAppOpenFailedToShow(@NonNull AppOpenAd appOpenAd, @NonNull AdError adError) {
 
-            }
+                }
 
-            @Override
-            public void onAppOpenFailedToLoad(@NonNull AppOpenAd appOpenAd, @NonNull AdError adError) {
-                isLoadingAd = false;
-                wortiseAppOpenAd = null;
-                isShowingAd = false;
-                onShowAdCompleteListener.onShowAdComplete();
-                loadAd(activity, wortiseAppOpenAdUnitId);
-            }
+                @Override
+                public void onAppOpenFailedToLoad(@NonNull AppOpenAd appOpenAd, @NonNull AdError adError) {
+                    isLoadingAd = false;
+                    wortiseAppOpenAd = null;
+                    isShowingAd = false;
+                    onShowAdCompleteListener.onShowAdComplete();
+                    loadAd(activity, wortiseAppOpenAdUnitId);
+                }
 
-            @Override
-            public void onAppOpenClicked(@NonNull com.wortise.ads.appopen.AppOpenAd appOpenAd) {
+                @Override
+                public void onAppOpenClicked(@NonNull com.wortise.ads.appopen.AppOpenAd appOpenAd) {
 
-            }
+                }
 
-            @Override
-            public void onAppOpenDismissed(@NonNull com.wortise.ads.appopen.AppOpenAd appOpenAd) {
-                wortiseAppOpenAd = null;
-                isShowingAd = false;
-                onShowAdCompleteListener.onShowAdComplete();
-                loadAd(activity, wortiseAppOpenAdUnitId);
-                Log.d(LOG_TAG, "onAdDismissedFullScreenContent.");
-            }
+                @Override
+                public void onAppOpenDismissed(@NonNull com.wortise.ads.appopen.AppOpenAd appOpenAd) {
+                    wortiseAppOpenAd = null;
+                    isShowingAd = false;
+                    onShowAdCompleteListener.onShowAdComplete();
+                    loadAd(activity, wortiseAppOpenAdUnitId);
+                    Log.d(LOG_TAG, "onAdDismissedFullScreenContent.");
+                }
 
-            @Override
-            public void onAppOpenLoaded(@NonNull com.wortise.ads.appopen.AppOpenAd appOpenAd) {
-                isLoadingAd = false;
-                loadTime = (new Date()).getTime();
-                Log.d(LOG_TAG, "onAdLoaded.");
-            }
+                @Override
+                public void onAppOpenLoaded(@NonNull com.wortise.ads.appopen.AppOpenAd appOpenAd) {
+                    isLoadingAd = false;
+                    loadTime = (new Date()).getTime();
+                    Log.d(LOG_TAG, "onAdLoaded.");
+                }
 
-            @Override
-            public void onAppOpenShown(@NonNull com.wortise.ads.appopen.AppOpenAd appOpenAd) {
+                @Override
+                public void onAppOpenShown(@NonNull com.wortise.ads.appopen.AppOpenAd appOpenAd) {
 
-            }
-        });
+                }
+            });
 
-        isShowingAd = true;
-        wortiseAppOpenAd.showAd(activity);
+            isShowingAd = true;
+            wortiseAppOpenAd.showAd(activity);
+        }
     }
 
     com.wortise.ads.appopen.AppOpenAd.Listener wortiseAppOpenAdListener = new com.wortise.ads.appopen.AppOpenAd.Listener() {
