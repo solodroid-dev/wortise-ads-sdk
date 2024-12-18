@@ -21,9 +21,9 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-    lintOptions {
-        disable 'GradleDependency'
-    }
+//    lintOptions {
+//        disable 'GradleDependency'
+//    }
 }
 
 dependencies {
@@ -33,8 +33,8 @@ dependencies {
     implementation 'com.google.android.material:material:1.3.0'
 
     //Primary Ad Networks
-    implementation 'com.google.android.gms:play-services-ads:23.5.0'
-    implementation 'com.wortise:android-sdk:1.6.0'
+    implementation 'com.google.android.gms:play-services-ads:23.6.0'
+    implementation 'com.wortise:android-sdk:1.6.1'
 
     //GDPR
     implementation 'com.google.android.ump:user-messaging-platform:3.1.0'
