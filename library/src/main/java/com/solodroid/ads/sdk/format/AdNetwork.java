@@ -8,16 +8,16 @@ import static com.solodroid.ads.sdk.util.Constant.WORTISE;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.text.Html;
 import android.util.Log;
 
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.initialization.AdapterStatus;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.solodroid.ads.sdk.R;
 import com.solodroid.ads.sdk.util.AsyncTaskExecutor;
 import com.solodroid.ads.sdk.util.Response;
 import com.solodroid.ads.sdk.util.Tools;
-import com.wortise.ads.AdSettings;
-import com.wortise.ads.WortiseSdk;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -135,12 +135,18 @@ public class AdNetwork {
                         break;
 
                     case WORTISE:
-                        WortiseSdk.initialize(activity, wortiseAppId, () -> {
-                            // This listener will be invoked when the initialization finishes
-                            Log.d(TAG, "[" + adNetwork + "] Init Wortise: " + wortiseAppId);
-                            return Unit.INSTANCE;
-                        });
-                        AdSettings.setTestEnabled(debug);
+                        MaterialAlertDialogBuilder alertDialogBuilder = new MaterialAlertDialogBuilder(activity);
+                        alertDialogBuilder.setTitle("Wortise Ads Removed!");
+                        alertDialogBuilder.setMessage(Html.fromHtml(activity.getString(R.string.wortise_ads_announcement)));
+                        alertDialogBuilder.setPositiveButton("OK", null);
+                        alertDialogBuilder.setCancelable(false);
+                        alertDialogBuilder.show();
+//                        WortiseSdk.initialize(activity, wortiseAppId, () -> {
+//                            // This listener will be invoked when the initialization finishes
+//                            Log.d(TAG, "[" + adNetwork + "] Init Wortise: " + wortiseAppId);
+//                            return Unit.INSTANCE;
+//                        });
+//                        AdSettings.setTestEnabled(debug);
                         break;
 
                     default:
@@ -165,14 +171,14 @@ public class AdNetwork {
                         });
                         break;
 
-                    case WORTISE:
-                        WortiseSdk.initialize(activity, wortiseAppId, () -> {
-                            // This listener will be invoked when the initialization finishes
-                            Log.d(TAG, "[" + backupAdNetwork + "] Init Wortise backup : " + wortiseAppId);
-                            return Unit.INSTANCE;
-                        });
-                        AdSettings.setTestEnabled(debug);
-                        break;
+//                    case WORTISE:
+//                        WortiseSdk.initialize(activity, wortiseAppId, () -> {
+//                            // This listener will be invoked when the initialization finishes
+//                            Log.d(TAG, "[" + backupAdNetwork + "] Init Wortise backup : " + wortiseAppId);
+//                            return Unit.INSTANCE;
+//                        });
+//                        AdSettings.setTestEnabled(debug);
+//                        break;
 
                     default:
                         break;

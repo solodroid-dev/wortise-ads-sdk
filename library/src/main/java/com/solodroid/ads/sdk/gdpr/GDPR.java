@@ -23,8 +23,6 @@ import com.solodroid.ads.sdk.util.AsyncTaskExecutor;
 import com.solodroid.ads.sdk.util.CheckStatus;
 import com.solodroid.ads.sdk.util.Response;
 import com.solodroid.ads.sdk.util.Tools;
-import com.wortise.ads.WortiseSdk;
-import com.wortise.ads.consent.ConsentManager;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -98,13 +96,13 @@ public class GDPR {
                     initializeMobileAdsSdk();
                 }
                 break;
-            case WORTISE:
-                WortiseSdk.wait(() -> {
-                    ConsentManager.requestIfRequired(activity);
-                    return Unit.INSTANCE;
-                });
-                new CheckStatus(activity).execute();
-                break;
+//            case WORTISE:
+//                WortiseSdk.wait(() -> {
+//                    ConsentManager.requestIfRequired(activity);
+//                    return Unit.INSTANCE;
+//                });
+//                new CheckStatus(activity).execute();
+//                break;
 
             default:
                 new CheckStatus(activity).execute();

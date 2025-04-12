@@ -21,7 +21,6 @@ import com.google.android.gms.ads.admanager.AdManagerAdView;
 import com.solodroid.ads.sdk.R;
 import com.solodroid.ads.sdk.util.CheckStatus;
 import com.solodroid.ads.sdk.util.Tools;
-import com.wortise.ads.AdError;
 
 public class BannerAd {
 
@@ -32,7 +31,7 @@ public class BannerAd {
         private AdView adView;
         private AdManagerAdView adManagerAdView;
         FrameLayout ironSourceBannerView;
-        private com.wortise.ads.banner.BannerAd wortiseBannerAd;
+//        private com.wortise.ads.banner.BannerAd wortiseBannerAd;
         FrameLayout wortiseBannerView;
 
         private String adStatus = "";
@@ -230,42 +229,42 @@ public class BannerAd {
                         });
                         break;
 
-                    case WORTISE:
-                        if (CheckStatus.isWortise) {
-                            wortiseBannerAd = new com.wortise.ads.banner.BannerAd(activity);
-                            wortiseBannerAd.setAdSize(Tools.getWortiseAdSize(activity));
-                            wortiseBannerAd.setAdUnitId(wortiseBannerId);
-                            wortiseBannerView = activity.findViewById(R.id.wortise_banner_view_container);
-                            wortiseBannerView.addView(wortiseBannerAd);
-                            wortiseBannerAd.loadAd();
-                            wortiseBannerAd.setListener(new com.wortise.ads.banner.BannerAd.Listener() {
-                                @Override
-                                public void onBannerImpression(@NonNull com.wortise.ads.banner.BannerAd bannerAd) {
-
-                                }
-
-                                @Override
-                                public void onBannerFailedToLoad(@NonNull com.wortise.ads.banner.BannerAd bannerAd, @NonNull AdError adError) {
-                                    wortiseBannerView.setVisibility(View.GONE);
-                                    loadBackupBannerAd();
-                                    Log.d(TAG, "failed to load Wortise banner: " + adError);
-                                }
-
-                                @Override
-                                public void onBannerClicked(@NonNull com.wortise.ads.banner.BannerAd bannerAd) {
-
-                                }
-
-                                @Override
-                                public void onBannerLoaded(@NonNull com.wortise.ads.banner.BannerAd bannerAd) {
-                                    wortiseBannerView.setVisibility(View.VISIBLE);
-                                    Log.d(TAG, "Wortise banner loaded");
-                                }
-                            });
-                        } else {
-                            Log.d(TAG, "Wortise Ads disabled");
-                        }
-                        break;
+//                    case WORTISE:
+//                        if (CheckStatus.isWortise) {
+//                            wortiseBannerAd = new com.wortise.ads.banner.BannerAd(activity);
+//                            wortiseBannerAd.setAdSize(Tools.getWortiseAdSize(activity));
+//                            wortiseBannerAd.setAdUnitId(wortiseBannerId);
+//                            wortiseBannerView = activity.findViewById(R.id.wortise_banner_view_container);
+//                            wortiseBannerView.addView(wortiseBannerAd);
+//                            wortiseBannerAd.loadAd();
+//                            wortiseBannerAd.setListener(new com.wortise.ads.banner.BannerAd.Listener() {
+//                                @Override
+//                                public void onBannerImpression(@NonNull com.wortise.ads.banner.BannerAd bannerAd) {
+//
+//                                }
+//
+//                                @Override
+//                                public void onBannerFailedToLoad(@NonNull com.wortise.ads.banner.BannerAd bannerAd, @NonNull AdError adError) {
+//                                    wortiseBannerView.setVisibility(View.GONE);
+//                                    loadBackupBannerAd();
+//                                    Log.d(TAG, "failed to load Wortise banner: " + adError);
+//                                }
+//
+//                                @Override
+//                                public void onBannerClicked(@NonNull com.wortise.ads.banner.BannerAd bannerAd) {
+//
+//                                }
+//
+//                                @Override
+//                                public void onBannerLoaded(@NonNull com.wortise.ads.banner.BannerAd bannerAd) {
+//                                    wortiseBannerView.setVisibility(View.VISIBLE);
+//                                    Log.d(TAG, "Wortise banner loaded");
+//                                }
+//                            });
+//                        } else {
+//                            Log.d(TAG, "Wortise Ads disabled");
+//                        }
+//                        break;
 
                     default:
                         break;
@@ -369,41 +368,41 @@ public class BannerAd {
                         });
                         break;
 
-                    case WORTISE:
-                        if (CheckStatus.isWortise) {
-                            wortiseBannerAd = new com.wortise.ads.banner.BannerAd(activity);
-                            wortiseBannerAd.setAdSize(Tools.getWortiseAdSize(activity));
-                            wortiseBannerAd.setAdUnitId(wortiseBannerId);
-                            wortiseBannerView = activity.findViewById(R.id.wortise_banner_view_container);
-                            wortiseBannerView.addView(wortiseBannerAd);
-                            wortiseBannerAd.loadAd();
-                            wortiseBannerAd.setListener(new com.wortise.ads.banner.BannerAd.Listener() {
-                                @Override
-                                public void onBannerImpression(@NonNull com.wortise.ads.banner.BannerAd bannerAd) {
-
-                                }
-
-                                @Override
-                                public void onBannerFailedToLoad(@NonNull com.wortise.ads.banner.BannerAd bannerAd, @NonNull AdError adError) {
-                                    wortiseBannerView.setVisibility(View.GONE);
-                                    Log.d(TAG, " [backup] failed to load Wortise banner: " + adError);
-                                }
-
-                                @Override
-                                public void onBannerClicked(@NonNull com.wortise.ads.banner.BannerAd bannerAd) {
-
-                                }
-
-                                @Override
-                                public void onBannerLoaded(@NonNull com.wortise.ads.banner.BannerAd bannerAd) {
-                                    wortiseBannerView.setVisibility(View.VISIBLE);
-                                    Log.d(TAG, " [backup] Wortise banner loaded");
-                                }
-                            });
-                        } else {
-                            Log.d(TAG, " [backup] Wortise Ads disabled");
-                        }
-                        break;
+//                    case WORTISE:
+//                        if (CheckStatus.isWortise) {
+//                            wortiseBannerAd = new com.wortise.ads.banner.BannerAd(activity);
+//                            wortiseBannerAd.setAdSize(Tools.getWortiseAdSize(activity));
+//                            wortiseBannerAd.setAdUnitId(wortiseBannerId);
+//                            wortiseBannerView = activity.findViewById(R.id.wortise_banner_view_container);
+//                            wortiseBannerView.addView(wortiseBannerAd);
+//                            wortiseBannerAd.loadAd();
+//                            wortiseBannerAd.setListener(new com.wortise.ads.banner.BannerAd.Listener() {
+//                                @Override
+//                                public void onBannerImpression(@NonNull com.wortise.ads.banner.BannerAd bannerAd) {
+//
+//                                }
+//
+//                                @Override
+//                                public void onBannerFailedToLoad(@NonNull com.wortise.ads.banner.BannerAd bannerAd, @NonNull AdError adError) {
+//                                    wortiseBannerView.setVisibility(View.GONE);
+//                                    Log.d(TAG, " [backup] failed to load Wortise banner: " + adError);
+//                                }
+//
+//                                @Override
+//                                public void onBannerClicked(@NonNull com.wortise.ads.banner.BannerAd bannerAd) {
+//
+//                                }
+//
+//                                @Override
+//                                public void onBannerLoaded(@NonNull com.wortise.ads.banner.BannerAd bannerAd) {
+//                                    wortiseBannerView.setVisibility(View.VISIBLE);
+//                                    Log.d(TAG, " [backup] Wortise banner loaded");
+//                                }
+//                            });
+//                        } else {
+//                            Log.d(TAG, " [backup] Wortise Ads disabled");
+//                        }
+//                        break;
 
                     default:
                         break;
